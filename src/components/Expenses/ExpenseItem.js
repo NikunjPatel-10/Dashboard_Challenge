@@ -1,5 +1,8 @@
+import React, { useState } from 'react';
 import ExpenseDate from './ExpenseDate'
 import './ExpenseItem.css'
+import Card from '../UI/Card';
+
 /**
  * get data from other component via props
  * @returns First exercise
@@ -9,18 +12,22 @@ function ExpenseItem(props) {
     // // console.log(expenseDate);
     // const expenseTitle = 'Car Insurance';
     // const expenseAmount = 294.67
-
+    const [title, setTitle] = useState(props.title)
+    const getTitle = () => {
+        setTitle('updated')
+    }
 
     return (
-        <div className="expense-item">
+        <Card className="expense-item">
             {/* <ExpenseDate></ExpenseDate> */}
             {/* oe we can write this way also */}
             <ExpenseDate date={props.date} />
             <div className="expense-item__description">
-                <h2>{props.title}</h2>
+                <h2>{title}</h2>
                 <div className="expense-item__price">${props.amount}</div>
             </div>
-        </div>
+            <button onClick={getTitle}>chage title</button>
+        </Card>
     );
 
     // return (
