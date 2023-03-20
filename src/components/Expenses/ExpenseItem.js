@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ExpenseDate from './ExpenseDate'
 import './ExpenseItem.css'
 import Card from '../UI/Card';
@@ -12,10 +12,7 @@ function ExpenseItem(props) {
     // // console.log(expenseDate);
     // const expenseTitle = 'Car Insurance';
     // const expenseAmount = 294.67
-    const [title, setTitle] = useState(props.title)
-    const getTitle = () => {
-        setTitle('updated')
-    }
+   
 
     return (
         <Card className="expense-item">
@@ -23,10 +20,9 @@ function ExpenseItem(props) {
             {/* oe we can write this way also */}
             <ExpenseDate date={props.date} />
             <div className="expense-item__description">
-                <h2>{title}</h2>
+                <h2>{props.title}</h2>
                 <div className="expense-item__price">${props.amount}</div>
             </div>
-            <button onClick={getTitle}>chage title</button>
         </Card>
     );
 
