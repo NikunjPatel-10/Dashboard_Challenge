@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import './App.css';
 import NewExpenses from './components/NewExpenses/NewExpenses';
 // import './components/ExpenseItem'
@@ -35,6 +35,16 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
+
+  const addExpenseHandler = (expense) => {
+    // const expenseData= {
+    //   expense
+    // }
+    // expense
+    console.log('in app js' , expense);
+    expenses.push(expense)
+  }
+  // const [expense,setExpense]= useState()
   // const expense = [
   //   {
   //     id:1,
@@ -51,7 +61,7 @@ function App() {
   // ]
   return (
     <div >
-     <NewExpenses/>
+      <NewExpenses onAddExpense={addExpenseHandler} />
       {/* <h1>My Demo Shop</h1> */}
       {/* passing data to the component  */}
       {/* <ExpenseItem title={expense[0].title}  price={expense[0].price} description={expense[0].description}></ExpenseItem>
