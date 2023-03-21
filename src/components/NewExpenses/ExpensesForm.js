@@ -26,7 +26,7 @@ const ExpenseForm = (props) => {
         event.preventDefault();
         const expenseData = {
             title: enteredtitle,
-            amount: enteredamount,
+            amount: +enteredamount,
             date: new Date(entereddate)
 
         }

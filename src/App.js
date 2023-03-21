@@ -43,6 +43,7 @@ function App() {
     SetExpenses((previousExpenses)=>{
       return [expense,...previousExpenses]
     });
+    console.log("result", expenses);
   }
   // const [expense,setExpense]= useState()
   // const expense = [
