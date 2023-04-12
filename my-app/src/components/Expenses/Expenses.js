@@ -33,9 +33,9 @@ console.log(props.items);
                         title={expense.title}
                         amount={expense.amount}
                         date={expense.date} />)
-            }  */}
-            {/* you can do it in this way also */}
-            {/* <ExpenseItem
+            }   */}
+            {/* you can do it in this way also
+             <ExpenseItem
                 title={props.items[0].title}
                 amount={props.items[0].amount}
                 date={props.items[0].date}

@@ -45,21 +45,7 @@ function App() {
     });
     console.log("result", expenses);
   }
-  // const [expense,setExpense]= useState()
-  // const expense = [
-  //   {
-  //     id:1,
-  //     title:'Product 1',
-  //     price:'$10',
-  //     description: 'First Product'
-  //   },
-  //   {
-  //     id:1,
-  //     title:'Product 2',
-  //     price:'$20',
-  //     description: 'Second Product'
-  //   }
-  // ]
+ 
   return (
     <div >
       <NewExpenses onAddExpense={addExpenseHandler} />
