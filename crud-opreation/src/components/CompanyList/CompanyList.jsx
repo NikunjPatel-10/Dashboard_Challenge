@@ -1,58 +1,95 @@
 import React, { useEffect, useState } from "react";
-import { getData, companyList } from "../../services/apiService";
+import { getData, deleteData } from "../../services/apiService";
 import { Link } from "react-router-dom";
+import "./CompanyList.css";
 
 function CompanyList() {
-  const [companydata, setCompnaydata] = useState([]);
+  const [companydata, setCompanydata] = useState([]);
 
   useEffect(() => {
     getListData();
   }, []);
 
+  /**
+   * get data from the database
+   * @returns
+   */
   const getListData = async () => {
     const response = await getData();
     console.log(response.data);
     const responseData = [];
-    response.data[""];
     for (const key in response.data) {
       const id = key;
       console.log(key);
-      const short = response.data;
-
+      const shortData = response.data;
       const responses = {
-        name: short[id].name,
-        address: short[id].address,
-        description: short[id].description,
-        email: short[id].email,
+        id: id,
+        name: shortData[id].name,
+        address: shortData[id].address,
+        description: shortData[id].description,
+        email: shortData[id].email,
       };
       responseData.push(responses);
     }
-    return setCompnaydata(responseData);
+    return setCompanydata(responseData);
   };
-  console.log(companydata);
+
+  // console.log(companydata);
+  useEffect(() => {
+    DeleteCompanyList();
+  }, []);
+
+  /**
+   * for delete list
+   * @param {*} id
+   */
+  const DeleteCompanyList = async (id) => {
+    await deleteData(id);
+    getListData();
+  };
   return (
     <div>
-      <div>
+      <div className="companyForm-btn-wrapper">
         <div></div>
         <div>
-          <Link to={"/company-form"}>
+          <Link to={"/company-form/add"}>
             <button>AddCompany</button>
           </Link>
         </div>
       </div>
-      <div>
-        {companydata.map((item) => {
-          return (
-            <ul>
-              <li>
-                <p>{item.name}</p>
-                <p>{item.description}</p>
-                <p>{item.address}</p>
-                <p>{item.email}</p>
-              </li>
-            </ul>
-          );
-        })}
+      <div className="companyList-wrapper">
+        <table className="table">
+          <thead className="table-header">
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </thead>
+          {companydata.map((item) => {
+            return (
+              <tbody>
+                <tr className="table-row">
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.address}</td>
+                  <td>
+                    <div className="actions">
+                      <Link to={"/company-form/edit/" + item.id}>
+                        <button className="edit-btn">Edit</button>
+                      </Link>
+                      <button
+                        className="delete-btn"
+                        onClick={() => DeleteCompanyList(item.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            );
+          })}
+        </table>
       </div>
     </div>
   );

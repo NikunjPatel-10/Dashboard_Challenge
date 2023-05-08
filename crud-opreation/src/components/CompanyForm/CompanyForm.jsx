@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CompanyForm.css";
-import { postData } from "../../services/apiService";
+import {
+  getCompanyListById,
+  postData,
+  updateCompanyList,
+} from "../../services/apiService";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function CompanyForm() {
   const [formData, setFormData] = useState({
@@ -10,16 +15,51 @@ function CompanyForm() {
     address: "",
   });
 
-  const { name, email, phone, address } = formData;
+  // get id from the parmas
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  /**
+   * fetch data from database
+   */
+  async function fetchData() {
+    const response = await getCompanyListById(id);
+    console.log(response);
+    setFormData({
+      name: response.data.name,
+      email: response.data.email,
+      description: response.data.description,
+      address: response.data.address,
+    });
+  }
+
+  const navigate = useNavigate();
+
+  const { name, email, description, address } = formData;
+
+  /**
+   * post data to the database
+   * @param {*} e
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (id) {
+      updateCompanyList(formData, id);
+    } else {
+      postData(formData);
+    }
     console.log(formData);
-    postData(formData);
+    navigate("../home");
   };
+
+  const btnText = id ? "Update" : "Submit";
   return (
     <div className="form-wrapper">
       <form onSubmit={handleSubmit}>
-        <div className="form-Input">
+        <div>
           <label htmlFor="name" className="form-label">
             Name:
           </label>
@@ -31,7 +71,7 @@ function CompanyForm() {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
         </div>
-        <div className="form-Input">
+        <div>
           <label htmlFor="phone" className="form-label">
             Description
           </label>
@@ -39,14 +79,14 @@ function CompanyForm() {
             type="text"
             name="phone"
             className="form-Control"
-            value={phone}
+            value={description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
           />
         </div>
 
-        <div className="form-Input">
+        <div>
           <label htmlFor="email" className="form-label">
             Email:
           </label>
@@ -61,7 +101,7 @@ function CompanyForm() {
           />
         </div>
 
-        <div className="form-Input">
+        <div>
           <label htmlFor="address" className="form-label">
             Address:
           </label>
@@ -76,7 +116,7 @@ function CompanyForm() {
           />
         </div>
         <div className="btn-wrapper">
-          <button type="submit">Submit</button>
+          <button type="submit">{btnText}</button>
         </div>
       </form>
     </div>

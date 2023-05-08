@@ -18,7 +18,12 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/company-form" element={<CompanyForm />}></Route>
+        {/* <Route path="/company-form/add" element={<CompanyForm />}></Route>
+        <Route path="/company-form/edit/:id" element={<CompanyForm />}></Route> */}
+        <Route path="/company-form" element={<CompanyForm />}>
+          <Route path="add" element={<CompanyForm />}></Route>
+          <Route path="edit/:id" element={<CompanyForm />}></Route>
+        </Route>
       </Routes>
     </div>
   );
