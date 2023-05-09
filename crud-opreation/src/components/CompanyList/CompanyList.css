@@ -62,7 +62,7 @@ td {
 }
 
 .edit-btn {
-    padding: 10px;
+    padding: 10px 15px;
     background-color: rgb(7, 146, 215);
     color: white;
     border-radius: 5px;
@@ -78,4 +78,22 @@ td {
     border-radius: 5px;
     border: none;
     cursor: pointer;
+}
+
+/* .table {
+    height: 100px;
+} */
+
+.table-body {
+    position: relative;
+    height: 100px;
+}
+
+.No-Data {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+
 }
