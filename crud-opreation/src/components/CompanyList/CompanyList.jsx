@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getData, deleteData } from "../../services/apiService";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./CompanyList.css";
 import { useContext } from "react";
 import Context from "../../contexts/Context";
+import DeleteOverlay from "../DeleteOverlay";
+import { CSSTransition } from "react-transition-group";
 
 function CompanyList() {
   const [companydata, setCompanydata] = useState([]);
@@ -15,7 +17,6 @@ function CompanyList() {
    * get data from header using context
    */
   const { search } = useContext(Context);
-
   console.log(search);
 
   /**
@@ -56,19 +57,35 @@ function CompanyList() {
     return setCompanydata(responseData);
   };
 
-  // console.log(companydata);
+  // for delete data
+
   useEffect(() => {
-    DeleteCompanyList();
+    handleConfirmDelete();
   }, []);
 
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+  const handleDelete = () => {
+    setShowDeleteOverlay(true);
+  };
+
   /**
-   * for delete list
+   * to delete data on confirm button
    * @param {*} id
    */
-  const DeleteCompanyList = async (id) => {
+  async function handleConfirmDelete(id) {
+    // delete data here
     await deleteData(id);
     getListData();
-  };
+    setShowDeleteOverlay(false);
+  }
+
+  /**
+   *
+   */
+  function handleCancelDelete() {
+    setShowDeleteOverlay(false);
+  }
+
   return (
     <div>
       <div className="companyForm-btn-wrapper">
@@ -100,12 +117,22 @@ function CompanyList() {
                         <Link to={"/company-form/edit/" + item.id}>
                           <button className="edit-btn">Edit</button>
                         </Link>
-                        <button
+                        {/* <button
                           className="delete-btn"
                           onClick={() => DeleteCompanyList(item.id)}
                         >
                           Delete
+                        </button> */}
+
+                        <button className="delete-btn" onClick={handleDelete}>
+                          Delete
                         </button>
+                        {showDeleteOverlay && (
+                          <DeleteOverlay
+                            onConfirm={() => handleConfirmDelete(item.id)}
+                            onCancel={handleCancelDelete}
+                          />
+                        )}
                       </div>
                     </td>
                   </tr>

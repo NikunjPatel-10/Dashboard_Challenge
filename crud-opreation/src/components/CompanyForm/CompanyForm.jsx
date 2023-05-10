@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CompanyForm.css";
+
+import * as Yup from "yup";
 import {
   getCompanyListById,
   postData,
@@ -15,6 +17,16 @@ function CompanyForm() {
     address: "",
   });
 
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .max(10, "maximum 10 characters are allowed")
+      .required("name is required"),
+    email: Yup.string()
+      .email("invalid email address")
+      .required("email is required"),
+    description: Yup.string().required("description is required"),
+    address: Yup.string().required("address is required"),
+  });
   // get id from the parmas
   const { id } = useParams();
 
@@ -40,17 +52,35 @@ function CompanyForm() {
 
   const { name, email, description, address } = formData;
 
+  const [formErrors, setFormErrors] = useState({});
   /**
    * post data to the database
    * @param {*} e
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (id) {
-      updateCompanyList(formData, id);
-    } else {
-      postData(formData);
-    }
+
+    validationSchema
+      .validate(formData, { abortEarly: false })
+      .then(() => {
+        if (id) {
+          updateCompanyList(formData, id);
+        } else {
+          postData(formData);
+        }
+        setFormErrors({});
+        // Form is valid - submit the data here
+        console.log("Form is valid!");
+      })
+      .catch((err) => {
+        // Form is invalid - set the errors here
+        const newErrors = {};
+        err.inner.forEach((error) => {
+          newErrors[error.path] = error.message;
+        });
+        setFormErrors(newErrors);
+      });
+
     console.log(formData);
     navigate("../home");
   };
@@ -70,6 +100,22 @@ function CompanyForm() {
             value={name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
+          {formErrors.name ? <div>{formErrors.name}</div> : null}
+        </div>
+        <div>
+          <label htmlFor="email" className="form-label">
+            Email:
+          </label>
+          <input
+            type="text"
+            name="email"
+            className="form-Control"
+            value={email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+          />
+          {formErrors.email ? <div>{formErrors.email}</div> : null}
         </div>
         <div>
           <label htmlFor="phone" className="form-label">
@@ -84,21 +130,7 @@ function CompanyForm() {
               setFormData({ ...formData, description: e.target.value })
             }
           />
-        </div>
-
-        <div>
-          <label htmlFor="email" className="form-label">
-            Email:
-          </label>
-          <input
-            type="text"
-            name="email"
-            className="form-Control"
-            value={email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-          />
+          {formErrors.description ? <div>{formErrors.description}</div> : null}
         </div>
 
         <div>
@@ -114,6 +146,7 @@ function CompanyForm() {
               setFormData({ ...formData, address: e.target.value })
             }
           />
+          {formErrors.address ? <div>{formErrors.address}</div> : null}
         </div>
         <div className="btn-wrapper">
           <button type="submit">{btnText}</button>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import logo from "./../../assets/Images/logo.jpg";
 import Context from "../../contexts/Context";
@@ -11,8 +11,9 @@ function Header() {
     setSearch(e.target.value);
     // console.log(search);
   };
-  // searchvalue = search;
-  // console.log(searchvalue);
+
+  const path = useLocation();
+
   return (
     <header className="header">
       <div>
@@ -20,14 +21,17 @@ function Header() {
           <img src={logo} />
         </figure>
       </div>
-      <div className="Searchbox">
-        <input
-          type="text"
-          placeholder="Search"
-          // value={search}
-          onChange={SearchHandler}
-        />
-      </div>
+      {path.pathname === "/home" && (
+        <div className="Searchbox">
+          <input
+            type="text"
+            placeholder="Search"
+            // value={search}
+            onChange={SearchHandler}
+          />
+        </div>
+      )}
+
       <nav className="navbar">
         <ul className="navbar-nav">
           <Link to={"/home"}>
@@ -45,7 +49,7 @@ function Header() {
           <Link to={"/contact"}>
             <li className="nav-item">
               {/* <Home size={22} /> */}
-              <span className="nav-link"> Contact-us</span>
+              <span className="nav-link">Contact-us</span>
             </li>
           </Link>
         </ul>
