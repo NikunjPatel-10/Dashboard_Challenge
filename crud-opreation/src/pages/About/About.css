@@ -1,0 +1,23 @@
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-Control {
+    padding: 5px;
+    border-radius: 4px;
+    width: 100%;
+    border: 1px solid #ccc;
+    margin: 8px 0;
+
+}
+
+.btn-wrapper button {
+    padding: 10px 20px;
+    background-color: rgb(45, 164, 207);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

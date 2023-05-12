@@ -60,27 +60,28 @@ function CompanyForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validationSchema
-      .validate(formData, { abortEarly: false })
-      .then(() => {
-        if (id) {
-          updateCompanyList(formData, id);
-        } else {
-          postData(formData);
-        }
-        setFormErrors({});
-        // Form is valid - submit the data here
-        console.log("Form is valid!");
-      })
-      .catch((err) => {
-        // Form is invalid - set the errors here
-        const newErrors = {};
-        err.inner.forEach((error) => {
-          newErrors[error.path] = error.message;
-        });
-        setFormErrors(newErrors);
-      });
+    // try {
+    //   validationSchema.validate(formData, { abortEarly: false }).then(() => {
+    //     // setFormErrors({});
+    //     // Form is valid - submit the data here
 
+    //     console.log("Form is valid!");
+    //   });
+    // } catch (error) {
+    //   if (error instanceof Yup.ValidationError) {
+    //     const validationErrors = {};
+    //     error.inner.forEach((innerError) => {
+    //       validationErrors[innerError.path] = innerError.message;
+    //     });
+    //     setFormErrors(validationErrors);
+    //   }
+    // }
+
+    if (id) {
+      updateCompanyList(formData, id);
+    } else {
+      postData(formData);
+    }
     console.log(formData);
     navigate("../home");
   };
