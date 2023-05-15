@@ -1,14 +1,13 @@
-.wrapper {
+/* .wrapper {
   display: flex;
   height: 100%;
   width: 100%;
-}
+} */
 
-.aside-wrapper {
+/* .aside-wrapper {
   height: 100%;
-}
+} */
 
 .main-section {
-  flex-grow: 1;
-  border: 1px solid green;
+  background-color: hsl(229.41deg 34.69% 9.61%);
 }
