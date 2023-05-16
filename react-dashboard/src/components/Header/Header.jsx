@@ -9,11 +9,12 @@ import {
   CalendarOutlined,
   LineChartOutlined,
 } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className=" d-flex justify-content-between header-size border-bottom">
-      <div className=" ms-4 d-flex justify-content-between">
+    <div className=" row header-size border-bottom gx-0">
+      <div className=" col-4  d-flex  justify-content-center align-items-center">
         <div className="d-flex justify-content-center align-items-center">
           <h4 className=" fst-normal text-white mb-0 ">Govalle Construction</h4>
         </div>
@@ -28,33 +29,33 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center col-4 gx-0">
         <nav className="nav h-100 d-flex justify-content-center align-items-center">
-          <a className="nav-link ">
+          <NavLink className="nav-link " to={"/menu"}>
             <UnorderedListOutlined />
-          </a>
-          <a className="nav-link ">
+          </NavLink>
+          <NavLink className="nav-link " to={"/align-data"}>
             <AlignCenterOutlined />
-          </a>
-          <a className="nav-link ">
+          </NavLink>
+          <NavLink className="nav-link" to={"/sliders"}>
             <SlidersOutlined />
-          </a>
-          <a className="nav-link">
+          </NavLink>
+          <NavLink className="nav-link" to={"/database"}>
             <DatabaseOutlined />
-          </a>
-          <a className="nav-link active">
+          </NavLink>
+          <NavLink className="nav-link " to={"/graph-statics"}>
             <LineChartOutlined />
-          </a>
+          </NavLink>
 
-          <a className="nav-link ">
+          <NavLink className="nav-link" to={"/calender"}>
             <CalendarOutlined />
-          </a>
-          <a className="nav-link">
+          </NavLink>
+          <NavLink className="nav-link" to={"/file"}>
             <FileOutlined />
-          </a>
+          </NavLink>
         </nav>
       </div>
-      <div></div>
+      <div className="col-4"></div>
     </div>
   );
 };

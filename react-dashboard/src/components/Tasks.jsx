@@ -1,5 +1,6 @@
 import React from "react";
 import CardHeader from "./UI/CardHeader";
+import DonutChart from "./DonutChart";
 
 const Tasks = () => {
   return (
@@ -7,7 +8,9 @@ const Tasks = () => {
       <div>
         <CardHeader title={"Tasks"} />
       </div>
-      <div></div>
+      <div>
+        <DonutChart />
+      </div>
     </div>
   );
 };
