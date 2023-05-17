@@ -4,7 +4,7 @@ import DonutChart from "./DonutChart";
 
 const Tasks = () => {
   return (
-    <div>
+    <div className="p-3">
       <div>
         <CardHeader title={"Tasks"} />
       </div>

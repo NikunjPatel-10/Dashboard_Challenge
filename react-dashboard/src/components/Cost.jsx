@@ -2,8 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import Chart from "chart.js/auto";
 import CardHeader from "./UI/CardHeader";
-// import Utils from "chart.js/auto";
-// import Utils from 'path/to/utils';
 
 const Cost = () => {
   useEffect(() => {
@@ -11,23 +9,88 @@ const Cost = () => {
       new Chart(document.getElementById("barchart"), {
         type: "bar",
         data: {
-          labels: ["January", "February", "March"],
+          labels: [""],
           datasets: [
             {
-              labels: ["Actual", "Plan", "Budget"],
-              data: [1200, 1900, 300],
-              backgroundColor: ["#84bb5d", "#54d2f9", "#4198e0"],
-              borderColor: "rgba(54, 162, 235, 1)",
-              borderWidth: 1,
+              label: ["Actual"],
+              data: ["3.3"],
+              backgroundColor: ["#84bb5d"],
+              barThickness: "55",
+            },
+
+            {
+              label: ["Plan"],
+              data: ["4.5"],
+              backgroundColor: ["#54d2f9"],
+              barThickness: "55",
+            },
+            {
+              label: ["Budget"],
+              data: ["6"],
+              backgroundColor: ["#4198e0"],
+              barThickness: "55",
             },
           ],
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          /**
+           * for gap between 2 elements
+           */
+          elements: {
+            bar: {
+              borderColor: "transparent",
+              borderWidth: {
+                left: 3,
+                right: 3,
+              },
+            },
+          },
+
           scales: {
             y: {
               beginAtZero: true,
+              border: {
+                display: false,
+              },
+              grid: {
+                color: "gray",
+              },
+              ticks: {
+                stepSize: 1.5,
+                /**
+                 * to display $ and k in y axis
+                 * @param {*} value
+                 * @param {*} index
+                 * @returns
+                 */
+                callback: function (value, index) {
+                  if (index == 0) {
+                    return "$" + value;
+                  } else {
+                    return value + "k";
+                  }
+                },
+              },
+            },
+            x: {
+              display: false,
+              ticks: {
+                padding: 50,
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              position: "top",
+              align: "start",
+              labels: {
+                usePointStyle: true,
+                pointStyle: "circle",
+                color: "#b5b8c5",
+                position: "right",
+              },
             },
           },
         },
@@ -35,11 +98,11 @@ const Cost = () => {
     })();
   }, []);
   return (
-    <div className="h-100 d-flex flex-column">
+    <div className="h-100 d-flex flex-column p-3">
       <div>
         <CardHeader title={"Cost"} />
       </div>
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 ">
         <canvas id="barchart"></canvas>
       </div>
     </div>

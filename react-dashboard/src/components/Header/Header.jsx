@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <div className=" row header-size border-bottom gx-0">
-      <div className=" col-4  d-flex  justify-content-center align-items-center">
+      <div className=" col-4  d-flex  ps-4">
         <div className="d-flex justify-content-center align-items-center">
           <h4 className=" fst-normal text-white mb-0 ">Govalle Construction</h4>
         </div>

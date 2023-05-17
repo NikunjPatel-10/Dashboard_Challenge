@@ -18,6 +18,7 @@ const DonutChart = () => {
         cutout: "115",
         responsive: true,
         maintainAspectRatio: false,
+
         plugins: {
           legend: {
             position: "top",

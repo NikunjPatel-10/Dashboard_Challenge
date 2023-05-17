@@ -8,7 +8,7 @@ import Workload from "../components/Workload";
 
 const GraphStatics = () => {
   return (
-    <div className="h-100">
+    <div className="h-100 ">
       <div className="row h-50 gx-0">
         <div className="col-4  border-end border-bottom ">
           <Health />

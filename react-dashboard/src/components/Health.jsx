@@ -3,11 +3,11 @@ import CardHeader from "./UI/CardHeader";
 
 const Health = () => {
   return (
-    <div>
+    <div className="p-3 h-100 d-flex flex-column">
       <div>
         <CardHeader title={"Health"} />
       </div>
-      <div className="p-3">
+      <div className="flex-grow-1">
         <table className="table w-100">
           <tbody>
             <tr className="table-row">

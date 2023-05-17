@@ -19,7 +19,7 @@ const CardHeader = (props) => {
     }
   }, []);
   return (
-    <div className="d-flex justify-content-between p-3">
+    <div className="d-flex justify-content-between ">
       <h5 className="d-flex justify-content-center align-items-center text-white mb-0">
         {props.title}
       </h5>
