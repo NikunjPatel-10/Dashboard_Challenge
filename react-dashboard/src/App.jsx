@@ -22,7 +22,7 @@ function App() {
             <Header />
           </div>
 
-          <div className="flex-grow-1">
+          <div className="flex-grow-1 overflow-hidden">
             <Routes>
               <Route path="/" element={<GraphStatics />}></Route>
               <Route path="/graph-statics" element={<GraphStatics />}></Route>

@@ -102,7 +102,7 @@ const Cost = () => {
       <div>
         <CardHeader title={"Cost"} />
       </div>
-      <div className="flex-grow-1 ">
+      <div className="cost-chart">
         <canvas id="barchart"></canvas>
       </div>
     </div>

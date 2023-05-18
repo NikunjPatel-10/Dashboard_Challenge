@@ -35,6 +35,14 @@ const Progress = () => {
         maintainAspectRatio: false,
         responsive: true,
         indexAxis: "y",
+        plugins: {
+          legend: {
+            labels: {
+              boxWidth: 0,
+              color: "#f4f5f6",
+            },
+          },
+        },
         elements: {
           bar: {
             borderColor: "transparent",
@@ -49,31 +57,56 @@ const Progress = () => {
             display: false,
           },
           y: {
-            HTMLTextAreaElementafterFit: function (scale) {
-              console.log(scale);
-              scale.width = 100;
+            afterFit: function (scale) {
+              // console.log(scale);
+              scale.width = 170;
             },
             ticks: {
               font: {
                 size: 15,
               },
+              color: "gray",
               crossAlign: "far",
             },
-          },
-        },
-        plugins: {
-          legend: {
-            labels: {
-              boxWidth: 0,
-              color: "#f4f5f6",
+            grid: {
+              display: false,
             },
           },
         },
       };
-      new Chart(document.getElementById("progress"), {
+
+      /**
+       * for display percentage of the status
+       */
+      const progressStatus = {
+        id: "progressStatus",
+        afterDatasetsDraw(chart) {
+          const {
+            ctx,
+            data,
+            chartArea: { top, bottom, left, right, width, height },
+          } = chart;
+          ctx.save();
+          // console.log(data);
+          data.datasets[0].data.forEach((dataPoint, index) => {
+            const { x, y } = chart
+              .getDatasetMeta(0)
+              .data[index].tooltipPosition();
+
+            ctx.font = "normal 16px sans-serif";
+            ctx.fillStyle = data.datasets[0].backgroundColor[index];
+            (ctx.align = "right"), (ctx.textBaseline = "middle");
+            ctx.fillText(dataPoint + "%", 120, y);
+          });
+        },
+      };
+
+      const ctx = document.getElementById("progress");
+      new Chart(ctx, {
         type: "bar",
         data: data,
         options: options,
+        plugins: [progressStatus],
       });
     })();
   }, []);
@@ -82,7 +115,7 @@ const Progress = () => {
       <div>
         <CardHeader title={"Progress"} />
       </div>
-      <div style={{ height: "300px" }}>
+      <div className="progress-chart">
         <canvas id="progress"></canvas>
       </div>
     </div>
