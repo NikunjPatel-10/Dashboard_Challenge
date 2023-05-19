@@ -1,11 +1,15 @@
 import React from "react";
 import CardHeader from "./UI/CardHeader";
 import Chart from "chart.js/auto";
+
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
 import { useEffect } from "react";
 
 const Progress = () => {
   useEffect(() => {
     (async function () {
+      Chart.register(ChartDataLabels);
       const data = {
         labels: [
           "Contracts",
@@ -41,6 +45,9 @@ const Progress = () => {
               boxWidth: 0,
               color: "#f4f5f6",
             },
+          },
+          datalabels: {
+            display: false,
           },
         },
         elements: {

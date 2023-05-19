@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import CardHeader from "./UI/CardHeader";
 import Chart from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const Workload = () => {
   useEffect(() => {
     (async function () {
+      localStorage.getItem("theme");
       const data = {
         labels: ["Mike", "Jenifer", "Brandon", "Sam", "George"],
         datasets: [
@@ -61,6 +63,12 @@ const Workload = () => {
           },
           y: {
             stacked: true,
+            ticks: {
+              font: {
+                size: 15,
+              },
+              crossAlign: "far",
+            },
           },
         },
         plugins: {
@@ -68,12 +76,26 @@ const Workload = () => {
             position: "top",
             align: "start",
             labels: {
-              color: "#f4f5f6",
+              color: "#878d96",
               usePointStyle: "true",
               pointStyle: "circle",
               position: "right",
             },
           },
+          datalabels: {
+            display: false,
+          },
+        },
+      };
+
+      const barheight = {
+        id: "barheight",
+        beforeInit(chart) {
+          const originalHeight = chart.legend.fit;
+          chart.legend.fit = function fit() {
+            originalHeight.bind(chart.legend)();
+            this.height += 50;
+          };
         },
       };
 
@@ -82,6 +104,7 @@ const Workload = () => {
         type: "bar",
         data: data,
         options: options,
+        plugins: [barheight],
       });
     })();
   }, []);

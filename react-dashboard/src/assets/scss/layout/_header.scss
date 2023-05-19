@@ -31,7 +31,7 @@
    .icon {
       padding: 5px;
       font-size: 14px;
-      color: white;
+      color: gray;
    }
 }
 
@@ -42,15 +42,15 @@
    align-items: center;
    padding: 0px 18px;
    font-size: 25px;
-   color: white;
+   color: gray;
 
    &:hover {
-      background-color: hsl(224deg 17.65% 16.67%);
+      // background-color: hsl(224deg 17.65% 16.67%);
       border: 2px solid hsl(70.95deg 89.16% 67.45%);
    }
 
    &.active {
-      background-color: hsl(224deg 17.65% 16.67%);
+      // background-color: hsl(224deg 17.65% 16.67%);
       border: 2px solid hsl(70.95deg 89.16% 67.45%);
    }
 }

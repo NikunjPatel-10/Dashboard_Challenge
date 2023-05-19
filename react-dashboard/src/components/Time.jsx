@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import CardHeader from "./UI/CardHeader";
 import Chart from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const Time = () => {
   useEffect(() => {
     (async function () {
+      localStorage.getItem("theme");
       const data = {
         labels: ["Planned Comple..", "Actual Completion", "Ahead"],
         datasets: [
@@ -29,6 +31,7 @@ const Time = () => {
         maintainAspectRatio: false,
         responsive: true,
         indexAxis: "y",
+
         plugins: {
           legend: {
             position: "top",
@@ -37,7 +40,11 @@ const Time = () => {
               usePointStyle: "true",
               pointStyle: "circle",
               position: "right",
+              color: "#878d96",
             },
+          },
+          datalabels: {
+            display: false,
           },
         },
         scales: {
@@ -54,39 +61,72 @@ const Time = () => {
               stepSize: 25,
             },
           },
+          y: {
+            afterFit: function (scale) {
+              scale.width = 110;
+            },
+            ticks: {
+              font: 15,
+            },
+            crossAlign: "far",
+          },
+        },
+      };
+
+      /**
+       * for spacing between bar and label
+       */
+      const barheight = {
+        id: "barheight",
+        beforeInit(chart) {
+          const originalHeight = chart.legend.fit;
+          chart.legend.fit = function fit() {
+            originalHeight.bind(chart.legend)();
+            this.height += 50;
+          };
         },
       };
       /**
        * for display percentage of the status
        */
-      const timeStatus = {
-        id: "timeStatus",
+      const customDataLabels = {
+        id: "customDataLabels",
         afterDatasetsDraw(chart) {
           const {
             ctx,
             data,
-            chartArea: { top, bottom, left, right, width, height },
+            chartArea: { width },
           } = chart;
           ctx.save();
-          // console.log(data);
-          data.datasets[0].data.forEach((dataPoint, index) => {
-            const { x, y } = chart
-              .getDatasetMeta(0)
-              .data[index].tooltipPosition();
+          data.datasets.forEach((res, indexOfSet) => {
+            res.data.forEach((dataPoint, index) => {
+              if (dataPoint > 0) {
+                const { y } = chart
+                  .getDatasetMeta(indexOfSet)
+                  .data[index].tooltipPosition();
 
-            ctx.font = "normal 16px sans-serif";
-            ctx.fillStyle = data.datasets[0].backgroundColor[index];
-            (ctx.align = "right"), (ctx.textBaseline = "middle");
-            ctx.fillText(dataPoint + "%", 120, y);
+                ctx.fillStyle = res.backgroundColor;
+                ctx.font = "15px sans-serif";
+                if (dataPoint > 0) {
+                  if (dataPoint[index] < 1) {
+                    dataPoint = "0";
+                  }
+                  ctx.textAlign = "right";
+                  ctx.textBaseline = "middle";
+                  ctx.fillText(dataPoint + "%", width / 2 + 125, y);
+                }
+              }
+            });
           });
         },
       };
+
       const ctx = document.getElementById("time");
       new Chart(ctx, {
         type: "bar",
         data: data,
         options: options,
-        plugins: [timeStatus],
+        plugins: [barheight, customDataLabels],
       });
     })();
   }, []);
