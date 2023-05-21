@@ -1,6 +1,6 @@
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
-import "./App.css";
+import "./App.scss";
 import GraphStatics from "./pages/GraphStatics";
 import Menu from "./pages/Menu";
 import Sliders from "./pages/Sliders";
@@ -9,6 +9,7 @@ import Files from "./pages/Files";
 import AlignData from "./pages/AlignData";
 import Calendar from "./pages/Calender";
 import { Route, Routes } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import ThemeProvider from "./context/ThemeProvider";
 import { useContext } from "react";
 import ThemeContext from "./context/ThemeContext";
@@ -26,16 +27,16 @@ function App() {
           <Sidebar toggleTheme={toggleTheme} theme={theme} />
         </div>
         <div
-          className="flex-grow-1 main-section d-flex flex-column"
+          className="flex-grow-1  d-flex flex-column"
           style={sidebarStyle}
         >
           <div>
             <Header />
           </div>
 
-          <div className="flex-grow-1 overflow-hidden">
-            <Routes>
-              <Route path="/" element={<GraphStatics />}></Route>
+          <div className=" h-100 overflow-hidden">
+            <Routes>    
+              <Route exact path="/"  element={<GraphStatics/>}></Route>
               <Route path="/graph-statics" element={<GraphStatics />}></Route>
               <Route path="/menu" element={<Menu />}></Route>
               <Route path="/sliders" element={<Sliders />}></Route>

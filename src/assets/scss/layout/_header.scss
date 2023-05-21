@@ -21,9 +21,7 @@
    height: 35px;
    width: 35px;
    border-radius: 50%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+   @include flex-center;
    position: absolute;
    left: 60%;
    background-color: hsl(201.55deg 46.61% 43.33%);
@@ -31,26 +29,22 @@
    .icon {
       padding: 5px;
       font-size: 14px;
-      color: gray;
+      color: $secondary;
    }
 }
 
 .nav-link {
-   height: 94%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+   height: 92%;
+   @include flex-center;
    padding: 0px 18px;
    font-size: 25px;
-   color: gray;
+   color: $secondary;
 
    &:hover {
-      // background-color: hsl(224deg 17.65% 16.67%);
-      border: 2px solid hsl(70.95deg 89.16% 67.45%);
+      border: 3px solid hsl(70.95deg 89.16% 67.45%);
    }
 
    &.active {
-      // background-color: hsl(224deg 17.65% 16.67%);
-      border: 2px solid hsl(70.95deg 89.16% 67.45%);
+      border: 3px solid hsl(70.95deg 89.16% 67.45%);
    }
 }

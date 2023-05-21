@@ -1,8 +1,6 @@
-.nav-action {
+// All the SCSS mixins goes here
+@mixin flex-center{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px 5px;
-    font-size: 23px;
-    color: gray;
 }
