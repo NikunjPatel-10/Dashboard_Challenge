@@ -1,0 +1,99 @@
+.companyForm-btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.companyForm-btn-wrapper button {
+    background-color: rgb(7, 146, 215);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    margin: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.companyList-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.responsive-table li {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.table {
+    width: 40%;
+    border-spacing: 0px;
+}
+
+@media (max-width:992px) {
+    .table {
+        width: auto;
+    }
+}
+
+
+.table-header {
+    background-color: #95A5A6;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+td {
+    padding: 15px;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.edit-btn {
+    padding: 10px 15px;
+    background-color: rgb(7, 146, 215);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    padding: 10px;
+    background-color: rgb(190, 56, 56);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+/* .table {
+    height: 100px;
+} */
+
+.table-body {
+    position: relative;
+    height: 100px;
+}
+
+.No-Data {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+
+}
