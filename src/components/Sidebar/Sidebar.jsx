@@ -20,13 +20,13 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 function Sidebar({ theme, toggleTheme }) {
-  const sidebarStyle = {
+  const headerStyle = {
     backgroundColor: theme === "dark" ? "black" : "#DFE6ED",
     color: theme === "dark" ? "#DFE6ED" : "black",
   };
   return (
-    <aside className="sidebar-wrapper" style={sidebarStyle}>
-      <div className="name-size border-bottom border-gray">
+    <aside className="sidebar-wrapper" style={headerStyle}>
+      <div className="name-size  border-gray">
         <div className="icon-wrapper">
           <span className="icon">PM</span>
         </div>

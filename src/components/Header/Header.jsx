@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   // const { toggleTheme } = useContext(ThemeContext);
   return (
-    <div className=" row header-size border-bottom border-gray gx-0 ">
+    <div className=" row header-size  border-gray gx-0 ">
       <div className=" col-4  d-flex  ps-4 ">
         <div className="d-flex justify-content-center align-items-center">
           <h4 className=" fst-normal  mb-0 ">Govalle Construction</h4>

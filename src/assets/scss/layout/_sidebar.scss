@@ -17,15 +17,15 @@
     height: 65px;
     @include flex-center;
     flex-shrink: 0;
-    border-bottom: 2px solid $secondary;
+    border-bottom: 1px solid $secondary;
 }
 
 .icon-wrapper {
     border: 2px solid $secondary;
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     border-radius: 50%;
-   @include flex-center;
+    @include flex-center;
     // margin: 9px;
 
     .icon {
@@ -35,26 +35,23 @@
     }
 }
 
-.bottom-nav{
-    
-}
 
 .navbar-nav {
     list-style: none;
     margin-right: auto;
     @include flex-center;
     flex-direction: column;
-    
+
 }
 
 .nav-item {
     font-size: 19px;
     // margin-bottom: 20px;
-    color:$secondary;
+    color: $secondary;
     cursor: pointer;
     width: 100%;
-   @include flex-center;
-    padding: 12px 0px;
+    @include flex-center;
+    padding: 15px 0px;
 
     &.active {
         background-color: hsl(224deg 17.65% 16.67%);
