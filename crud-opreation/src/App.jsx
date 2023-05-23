@@ -3,20 +3,28 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Header from "./components/Header/Header";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import CompanyForm from "./components/CompanyForm/CompanyForm";
 import ContextProvider from "./contexts/ContextProvider";
+import Login from "./pages/Login/Login";
+import Registration from "./pages/Registration/Registration";
 
 function App() {
+  const path = useLocation();
+  const hideHeaderRoutes = ["/login", "/registration"];
+  const hideHeader = hideHeaderRoutes.includes(path.pathname);
+
   return (
-    <div>
+    <div className="main-wrapper">
       <ContextProvider>
-        <Header />
+        {!hideHeader && <Header />}
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/registration" element={<Registration />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>

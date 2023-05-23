@@ -1,9 +1,10 @@
 import axios from "axios";
 import { BaseUrl } from "./../../environment";
+import Registration from "../pages/Registration/Registration";
 
 export const postData = async (data) => {
   await axios.post(BaseUrl + "company.json", { ...data }).then((res) => {
-    console.log(res);
+    // console.log(res);
   });
 };
 
@@ -21,4 +22,14 @@ export const getCompanyListById = async (id) => {
 
 export const updateCompanyList = async (data, id) => {
   await axios.put(BaseUrl + "company/" + id + ".json", { ...data });
+};
+
+// for Registration
+
+export const postRegisterData = async (data) => {
+  return await axios
+    .post(BaseUrl + "RegisterData.json", { ...data })
+    .then((res) => {
+      console.log(res);
+    });
 };
