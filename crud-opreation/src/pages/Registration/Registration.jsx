@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import "./registration.css";
 import { postRegisterData } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Registration = () => {
   const naviagte = useNavigate();
@@ -39,7 +40,10 @@ const Registration = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form>
+        <Form className="form-size">
+          <div className="heading-text">
+            <h3>Registration page</h3>
+          </div>
           <div>
             <label htmlFor="firstName">First Name</label>
             <Field
@@ -80,9 +84,17 @@ const Registration = () => {
             />
             <ErrorMessage name="password" component="div" />
           </div>
-
           <div className="btn-wrapper">
             <button type="submit">Register</button>
+          </div>
+          <div className="detail-text">
+            <p>
+              Already user then
+              <Link to="../login" className="main-text">
+                Click here
+              </Link>{" "}
+              to Sign Up
+            </p>
           </div>
         </Form>
       </Formik>

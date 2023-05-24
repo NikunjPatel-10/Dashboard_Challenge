@@ -1,6 +1,14 @@
 .registration-form {
+    height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    background-color: #6e9bc2;
+}
+
+.form-size {
+    width: 30%;
+    background-color: white;
 }
 
 .form-Control {
@@ -18,4 +26,15 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.detail-text {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.main-text {
+    color: blue;
+    cursor: pointer;
 }

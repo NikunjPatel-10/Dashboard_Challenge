@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "./../../assets/Images/logo.jpg";
 import Context from "../../contexts/Context";
@@ -12,7 +12,13 @@ function Header() {
     // console.log(search);
   };
 
+  const navigate = useNavigate();
   const path = useLocation();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("../login");
+  };
 
   return (
     <header className="header">
@@ -52,6 +58,12 @@ function Header() {
               <span className="nav-link">Contact-us</span>
             </li>
           </Link>
+          <li className="nav-item">
+            {/* <Home size={22} /> */}
+            <button className="logout-btn-wrapper" onClick={handleLogout}>
+              Logout
+            </button>
+          </li>
         </ul>
       </nav>
     </header>

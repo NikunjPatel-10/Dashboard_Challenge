@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
+import { getRegisterData } from "../../services/apiService";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 
 const Login = () => {
   const initialValues = {
@@ -14,22 +16,56 @@ const Login = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+  const [registerData, setRegisterData] = useState([]);
+  useEffect(() => {
+    getRegistrationDetails();
+  }, []);
+
+  const getRegistrationDetails = async () => {
+    const response = await getRegisterData();
+    console.log(response);
+    let responseData = [];
+
+    for (const key in response.data) {
+      const id = key;
+      const responses = {
+        id: id,
+        firstname: response.data[id].firstName,
+        lastname: response.data[id].lastName,
+        email: response.data[id].email,
+        password: response.data[id].password,
+      };
+      responseData.push(responses);
+    }
+    return setRegisterData(responseData);
+  };
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (values) => {
+    let auth = registerData.find(
+      (data) => data.email === values.email && data.password === values.password
+    );
+    if (auth) {
+      alert("login successfully");
+      localStorage.setItem("auth", true);
+      navigate("../home");
+    } else {
+      alert("invalid credentials");
+    }
   };
 
   return (
     <div className="login-wrapper">
-      {/* <h1>Login</h1> */}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form>
+        <Form className="form-size">
+          <div className="heading-text">
+            <h3>Login page</h3>
+          </div>
           <div className="">
             <label htmlFor="email">Email</label>
             <Field
@@ -38,7 +74,7 @@ const Login = () => {
               name="email"
               className="form-Control"
             />
-            <ErrorMessage name="email" component="div" />
+            <ErrorMessage name="email" className="error" />
           </div>
           <div className="">
             <label htmlFor="password">Password</label>
@@ -48,10 +84,19 @@ const Login = () => {
               name="password"
               className="form-Control"
             />
-            <ErrorMessage name="password" component="div" />
+            <ErrorMessage name="password" className="error" />
           </div>
           <div className="btn-wrapper">
             <button type="submit">Submit</button>
+          </div>
+          <div className="detail-text">
+            <p>
+              If you are a new user{" "}
+              <Link to="../registration" className="main-text">
+                Click here
+              </Link>{" "}
+              to register
+            </p>
           </div>
         </Form>
       </Formik>

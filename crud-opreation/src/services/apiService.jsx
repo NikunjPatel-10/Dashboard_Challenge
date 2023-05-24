@@ -33,3 +33,7 @@ export const postRegisterData = async (data) => {
       console.log(res);
     });
 };
+
+export const getRegisterData = async () => {
+  return await axios.get(BaseUrl + "RegisterData.json");
+};
