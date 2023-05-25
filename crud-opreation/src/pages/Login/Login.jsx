@@ -11,6 +11,9 @@ const Login = () => {
     password: "",
   };
 
+  /**
+   * validate using yup
+   */
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().required("Password is required"),
@@ -21,6 +24,10 @@ const Login = () => {
     getRegistrationDetails();
   }, []);
 
+  /**
+   * get the registration data of the all users
+   * @returns
+   */
   const getRegistrationDetails = async () => {
     const response = await getRegisterData();
     console.log(response);
@@ -42,6 +49,10 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  /**
+   * get the register data and match with email and password
+   * @param {*} values
+   */
   const handleSubmit = (values) => {
     let auth = registerData.find(
       (data) => data.email === values.email && data.password === values.password
@@ -56,50 +67,62 @@ const Login = () => {
   };
 
   return (
-    <div className="login-wrapper">
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form className="form-size">
-          <div className="heading-text">
-            <h3>Login page</h3>
-          </div>
-          <div className="">
-            <label htmlFor="email">Email</label>
-            <Field
-              type="email"
-              id="email"
-              name="email"
-              className="form-Control"
-            />
-            <ErrorMessage name="email" className="error" />
-          </div>
-          <div className="">
-            <label htmlFor="password">Password</label>
-            <Field
-              type="password"
-              id="password"
-              name="password"
-              className="form-Control"
-            />
-            <ErrorMessage name="password" className="error" />
-          </div>
-          <div className="btn-wrapper">
-            <button type="submit">Submit</button>
-          </div>
-          <div className="detail-text">
-            <p>
-              If you are a new user{" "}
-              <Link to="../registration" className="main-text">
-                Click here
-              </Link>{" "}
-              to register
-            </p>
-          </div>
-        </Form>
-      </Formik>
+    <div className="background-wrapper">
+      <div className="login-wrapper">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          <Form className="loginform-size">
+            <div className="heading-text">
+              <h3>Login page</h3>
+            </div>
+            <div className="">
+              <label htmlFor="email">Email</label>
+              <Field
+                type="email"
+                id="email"
+                name="email"
+                className="form-Control"
+                placeholder="enter email here"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="error-message"
+              />
+            </div>
+            <div className="">
+              <label htmlFor="password">Password</label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                className="form-Control"
+                placeholder="enter password here"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="error-message"
+              />
+            </div>
+            <div className="btn-wrapper">
+              <button type="submit">Submit</button>
+            </div>
+            <div className="detail-text">
+              <p>
+                If you are a new user{" "}
+                <Link to="../registration" className="main-text">
+                  Click here
+                </Link>{" "}
+                to register
+              </p>
+            </div>
+          </Form>
+        </Formik>
+      </div>
     </div>
   );
 };

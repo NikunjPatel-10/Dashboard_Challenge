@@ -117,13 +117,6 @@ function CompanyList() {
                         <Link to={"/company-form/edit/" + item.id}>
                           <button className="edit-btn">Edit</button>
                         </Link>
-                        {/* <button
-                          className="delete-btn"
-                          onClick={() => DeleteCompanyList(item.id)}
-                        >
-                          Delete
-                        </button> */}
-
                         <button className="delete-btn" onClick={handleDelete}>
                           Delete
                         </button>

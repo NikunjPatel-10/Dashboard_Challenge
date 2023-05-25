@@ -16,8 +16,8 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 function App() {
   const path = useLocation();
   const hideHeaderRoutes = ["/login", "/registration"];
-  const hideHeader = hideHeaderRoutes.includes(path.pathname.toLowerCase());
-  console.log(path.pathname.toLowerCase());
+  const hideHeader = hideHeaderRoutes.includes(path.pathname);
+  console.log(path.pathname);
 
   return (
     <div className="main-wrapper">

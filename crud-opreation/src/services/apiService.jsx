@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BaseUrl } from "./../../environment";
-import Registration from "../pages/Registration/Registration";
 
 export const postData = async (data) => {
   await axios.post(BaseUrl + "company.json", { ...data }).then((res) => {

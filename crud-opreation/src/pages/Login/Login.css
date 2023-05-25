@@ -1,15 +1,33 @@
+.background-wrapper {
+    height: 100%;
+    background: url(./../../assets/Images/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
+
+
 .login-wrapper {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 15px;
-    background-color: #6e9bc2;
+    /* background-color: #6e9bc2; */
+
 }
 
-.form-size {
+.loginform-size {
     width: 25%;
     background-color: white;
+}
+
+@media(max-width:992px) {
+    .loginform-size {
+        width: auto;
+    }
 }
 
 .heading-text {
@@ -18,7 +36,7 @@
 
 }
 
-.error {
+.error-message {
     color: red;
 }
 
@@ -28,6 +46,7 @@
     /* width: 100%;/ */
     border: 1px solid #ccc;
     margin: 8px 0;
+    outline: none;
 }
 
 .btn-wrapper button {

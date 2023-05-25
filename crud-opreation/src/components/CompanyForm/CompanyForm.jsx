@@ -60,13 +60,24 @@ function CompanyForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (id) {
-      updateCompanyList(formData, id);
-    } else {
-      postData(formData);
-    }
-    console.log(formData);
-    navigate("../home");
+    validationSchema
+      .validate(formData, { abortEarly: false })
+      .then(() => {
+        if (id) {
+          updateCompanyList(formData, id);
+        } else {
+          postData(formData);
+        }
+        console.log(formData);
+        navigate("../home");
+      })
+      .catch((validationErrors) => {
+        const errors = {};
+        validationErrors.inner.forEach((error) => {
+          errors[error.path] = error.message;
+        });
+        setFormErrors(errors);
+      });
   };
 
   const btnText = id ? "Update" : "Submit";
@@ -84,7 +95,7 @@ function CompanyForm() {
             value={name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
-          {formErrors.name ? <div>{formErrors.name}</div> : null}
+          {formErrors.name && <div>{formErrors.name}</div>}
         </div>
         <div>
           <label htmlFor="email" className="form-label">
@@ -99,7 +110,7 @@ function CompanyForm() {
               setFormData({ ...formData, email: e.target.value })
             }
           />
-          {formErrors.email ? <div>{formErrors.email}</div> : null}
+          {formErrors.email && <div>{formErrors.email}</div>}
         </div>
         <div>
           <label htmlFor="phone" className="form-label">
@@ -114,7 +125,7 @@ function CompanyForm() {
               setFormData({ ...formData, description: e.target.value })
             }
           />
-          {formErrors.description ? <div>{formErrors.description}</div> : null}
+          {formErrors.description && <div>{formErrors.description}</div>}
         </div>
 
         <div>
@@ -130,7 +141,7 @@ function CompanyForm() {
               setFormData({ ...formData, address: e.target.value })
             }
           />
-          {formErrors.address ? <div>{formErrors.address}</div> : null}
+          {formErrors.address && <div>{formErrors.address}</div>}
         </div>
         <div className="btn-wrapper">
           <button type="submit">{btnText}</button>

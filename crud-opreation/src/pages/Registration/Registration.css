@@ -1,14 +1,30 @@
+.background-wrapper {
+    height: 100%;
+    background: url(./../../assets/Images/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
 .registration-form {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #6e9bc2;
+    /* background-color: #6e9bc2; */
 }
 
 .form-size {
     width: 30%;
     background-color: white;
+    margin: 10px;
+}
+
+@media(max-width:992px) {
+    .form-size {
+        width: auto;
+    }
 }
 
 .form-Control {
@@ -17,7 +33,13 @@
     width: 100%;
     border: 1px solid #ccc;
     margin: 8px 0;
+    outline: none;
 }
+
+.error-message {
+    color: red;
+}
+
 
 .btn-wrapper button {
     padding: 10px 20px;

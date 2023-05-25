@@ -15,6 +15,9 @@ const Registration = () => {
     password: "",
   };
 
+  /**
+   * validate the field
+   */
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
@@ -24,80 +27,102 @@ const Registration = () => {
       .required("Password is required"),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+  /**
+   * post data into database
+   * @param {*} values
+   */
+  const handleSubmit = (values) => {
     postRegisterData(values);
     naviagte("../login");
   };
 
   return (
-    <div className="registration-form">
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form className="form-size">
-          <div className="heading-text">
-            <h3>Registration page</h3>
-          </div>
-          <div>
-            <label htmlFor="firstName">First Name</label>
-            <Field
-              type="text"
-              id="firstName"
-              name="firstName"
-              className="form-Control"
-            />
-            <ErrorMessage name="firstName" component="div" />
-          </div>
-          <div>
-            <label htmlFor="lastName">Last Name</label>
-            <Field
-              type="text"
-              id="lastName"
-              name="lastName"
-              className="form-Control"
-            />
-            <ErrorMessage name="lastName" component="div" />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <Field
-              type="email"
-              id="email"
-              name="email"
-              className="form-Control"
-            />
-            <ErrorMessage name="email" component="div" />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <Field
-              type="password"
-              id="password"
-              name="password"
-              className="form-Control"
-            />
-            <ErrorMessage name="password" component="div" />
-          </div>
-          <div className="btn-wrapper">
-            <button type="submit">Register</button>
-          </div>
-          <div className="detail-text">
-            <p>
-              Already user then
-              <Link to="../login" className="main-text">
-                Click here
-              </Link>{" "}
-              to Sign Up
-            </p>
-          </div>
-        </Form>
-      </Formik>
+    <div className="background-wrapper">
+      <div className="registration-form">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          <Form className="form-size">
+            <div className="heading-text">
+              <h3>Registration page</h3>
+            </div>
+            <div>
+              <label htmlFor="firstName">First Name</label>
+              <Field
+                type="text"
+                id="firstName"
+                name="firstName"
+                className="form-Control"
+                placeholder="enter firstname"
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                className="error-message"
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName">Last Name</label>
+              <Field
+                type="text"
+                id="lastName"
+                name="lastName"
+                className="form-Control"
+                placeholder="enter lastname"
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                className="error-message"
+              />
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <Field
+                type="email"
+                id="email"
+                name="email"
+                className="form-Control"
+                placeholder="enter email"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="error-message"
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                className="form-Control"
+                placeholder="enter password"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="error-message"
+              />
+            </div>
+            <div className="btn-wrapper">
+              <button type="submit">Register</button>
+            </div>
+            <div className="detail-text">
+              <p>
+                Already user then{" "}
+                <Link to="../login" className="main-text">
+                  Click here
+                </Link>{" "}
+                to Sign Up
+              </p>
+            </div>
+          </Form>
+        </Formik>
+      </div>
     </div>
   );
 };
