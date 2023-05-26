@@ -2,7 +2,10 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./registration.css";
-import { postRegisterData } from "../../services/apiService";
+import {
+  // postRegisterData,
+  signUpWithEmailPassword,
+} from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -32,7 +35,8 @@ const Registration = () => {
    * @param {*} values
    */
   const handleSubmit = (values) => {
-    postRegisterData(values);
+    signUpWithEmailPassword(values);
+    // postRegisterData(values);
     naviagte("../login");
   };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
-import { getRegisterData } from "../../services/apiService";
+import { getRegisterData, loggedInUser } from "../../services/apiService";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 
 const Login = () => {
@@ -19,33 +19,33 @@ const Login = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const [registerData, setRegisterData] = useState([]);
-  useEffect(() => {
-    getRegistrationDetails();
-  }, []);
+  // const [registerData, setRegisterData] = useState([]);
+  // useEffect(() => {
+  //   getRegistrationDetails();
+  // }, []);
 
   /**
    * get the registration data of the all users
    * @returns
    */
-  const getRegistrationDetails = async () => {
-    const response = await getRegisterData();
-    console.log(response);
-    let responseData = [];
+  // const getRegistrationDetails = async () => {
+  //   const response = await getRegisterData();
+  //   console.log(response);
+  //   let responseData = [];
 
-    for (const key in response.data) {
-      const id = key;
-      const responses = {
-        id: id,
-        firstname: response.data[id].firstName,
-        lastname: response.data[id].lastName,
-        email: response.data[id].email,
-        password: response.data[id].password,
-      };
-      responseData.push(responses);
-    }
-    return setRegisterData(responseData);
-  };
+  //   for (const key in response.data) {
+  //     const id = key;
+  //     const responses = {
+  //       id: id,
+  //       firstname: response.data[id].firstName,
+  //       lastname: response.data[id].lastName,
+  //       email: response.data[id].email,
+  //       password: response.data[id].password,
+  //     };
+  //     responseData.push(responses);
+  //   }
+  //   return setRegisterData(responseData);
+  // };
 
   const navigate = useNavigate();
 
@@ -53,17 +53,26 @@ const Login = () => {
    * get the register data and match with email and password
    * @param {*} values
    */
-  const handleSubmit = (values) => {
-    let auth = registerData.find(
-      (data) => data.email === values.email && data.password === values.password
-    );
-    if (auth) {
+  const handleSubmit = async (values) => {
+    try {
+      loggedInUser(values);
       alert("login successfully");
       localStorage.setItem("auth", true);
       navigate("../home");
-    } else {
+    } catch (error) {
       alert("invalid credentials");
+      console.log("error");
     }
+
+    // let auth = registerData.find(
+    //   (data) => data.email === values.email && data.password === values.password
+    // );
+    // if (auth) {
+    //   // alert("login successfully");
+    //   // localStorage.setItem("auth", true);
+    // } else {
+    // alert("invalid credentials");
+    // }
   };
 
   return (
