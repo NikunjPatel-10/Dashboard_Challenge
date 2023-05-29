@@ -6,32 +6,13 @@ import { useContext } from "react";
 import Context from "../../contexts/Context";
 import DeleteOverlay from "../DeleteOverlay";
 import { CSSTransition } from "react-transition-group";
+import SortData from "../SortData/SortData";
 
 function CompanyList() {
   const [companydata, setCompanydata] = useState([]);
   useEffect(() => {
     getListData();
   }, []);
-
-  /**
-   * get data from header using context
-   */
-  const { search } = useContext(Context);
-  console.log(search);
-
-  /**
-   * filter companydata according to the search
-   */
-  const SearchData = companydata.filter((data) => {
-    if (!data) {
-      return null;
-    }
-    if (!search) {
-      return data;
-    } else {
-      return JSON.stringify(data).includes(search);
-    }
-  });
 
   /**
    * get data from the database
@@ -51,11 +32,47 @@ function CompanyList() {
         address: shortData[id].address,
         description: shortData[id].description,
         email: shortData[id].email,
+        companyType: shortData[id].companyType,
       };
       responseData.push(responses);
     }
     return setCompanydata(responseData);
   };
+
+  // sort companydata
+
+  const [sortData, setSortData] = useState(companydata);
+
+  // useEffect(() => {
+  //   sortDataHandler();
+  // }, []);
+
+  const sortDataHandler = (data) => {
+    if (data === "All") {
+      setSortData(companydata);
+    } else {
+      setSortData(companydata.filter((res) => res.companyType === data));
+    }
+  };
+
+  /**
+   * get data from header using context
+   */
+  const { search } = useContext(Context);
+  console.log(search);
+
+  /**
+   * filter companydata according to the search
+   */
+  const SearchData = sortData.filter((data) => {
+    if (!data) {
+      return null;
+    } else if (!search) {
+      return data;
+    } else {
+      return JSON.stringify(data).includes(search);
+    }
+  });
 
   // for delete data
 
@@ -97,10 +114,12 @@ function CompanyList() {
         </div>
       </div>
       <div className="companyList-wrapper">
+        <SortData companydata={companydata} onSortData={sortDataHandler} />
         <table className="table">
           <thead className="table-header">
             <th>Name</th>
             <th>E-mail</th>
+            <th>Type</th>
             <th>Address</th>
             <th>Actions</th>
           </thead>
@@ -111,6 +130,7 @@ function CompanyList() {
                   <tr className="table-row">
                     <td>{item.name}</td>
                     <td>{item.email}</td>
+                    <td>{item.companyType}</td>
                     <td>{item.address}</td>
                     <td>
                       <div className="actions">

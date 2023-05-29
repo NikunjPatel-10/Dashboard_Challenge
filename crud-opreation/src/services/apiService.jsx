@@ -24,6 +24,12 @@ export const updateCompanyList = async (data, id) => {
   await axios.put(BaseUrl + "company/" + id + ".json", { ...data });
 };
 
+// for registration
+
+export const postRegisterData = async () => {
+  return await axios.post(BaseUrl + "RegisterData.json");
+};
+
 export const getRegisterData = async () => {
   return await axios.get(BaseUrl + "RegisterData.json");
 };
@@ -47,7 +53,7 @@ export const updateRegistrationData = async (data, userId) => {
       ...data,
     })
     .then((res) => {
-      // console.log(res);
+      console.log(res);
     });
 };
 export const loggedInUser = async (data) => {

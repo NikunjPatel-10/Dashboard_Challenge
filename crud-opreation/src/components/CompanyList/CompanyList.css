@@ -14,10 +14,13 @@
 }
 
 .companyList-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 50%;
+    margin: 0px auto;
+
 }
+
+
+
 
 .responsive-table li {
     border-radius: 3px;
@@ -28,7 +31,8 @@
 }
 
 .table {
-    width: 40%;
+    /* width: 50%; */
+    width: 100%;
     border-spacing: 0px;
 }
 

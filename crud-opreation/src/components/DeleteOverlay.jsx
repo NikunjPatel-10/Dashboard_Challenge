@@ -8,8 +8,6 @@ function DeleteOverlay(props) {
 
   //   const [className, setClassName] = useState();
   function handleCancel() {
-    // const model = document.querySelector(".modal");
-    // model.classList.add("close_animation");
     props.onCancel();
   }
 

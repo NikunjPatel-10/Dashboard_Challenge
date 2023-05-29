@@ -15,6 +15,7 @@ function CompanyForm() {
     email: "",
     description: "",
     address: "",
+    companyType: "",
   });
 
   const validationSchema = Yup.object({
@@ -26,6 +27,7 @@ function CompanyForm() {
       .required("email is required"),
     description: Yup.string().required("description is required"),
     address: Yup.string().required("address is required"),
+    companyType: Yup.string().required("this field is required"),
   });
   // get id from the parmas
   const { id } = useParams();
@@ -44,13 +46,14 @@ function CompanyForm() {
       name: response.data.name,
       email: response.data.email,
       description: response.data.description,
+      companyType: response.data.companyType,
       address: response.data.address,
     });
   }
 
   const navigate = useNavigate();
 
-  const { name, email, description, address } = formData;
+  const { name, email, description, address, companyType } = formData;
 
   const [formErrors, setFormErrors] = useState({});
   /**
@@ -60,6 +63,7 @@ function CompanyForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log(formData);
     validationSchema
       .validate(formData, { abortEarly: false })
       .then(() => {
@@ -78,6 +82,7 @@ function CompanyForm() {
         });
         setFormErrors(errors);
       });
+    setFormData(" ");
   };
 
   const btnText = id ? "Update" : "Submit";
@@ -111,6 +116,22 @@ function CompanyForm() {
             }
           />
           {formErrors.email && <div>{formErrors.email}</div>}
+        </div>
+        <div>
+          <label>
+            Company Type:
+            <select
+              value={companyType}
+              className="form-Control"
+              onChange={(e) =>
+                setFormData({ ...formData, companyType: e.target.value })
+              }
+            >
+              <option value="ALL">-- Select --</option>
+              <option value="NC">NC</option>
+              <option value="MNC">MNC</option>
+            </select>
+          </label>
         </div>
         <div>
           <label htmlFor="phone" className="form-label">
