@@ -100,7 +100,9 @@ function CompanyForm() {
             value={name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
-          {formErrors.name && <div>{formErrors.name}</div>}
+          {formErrors.name && (
+            <div className="error-message">{formErrors.name}</div>
+          )}
         </div>
         <div>
           <label htmlFor="email" className="form-label">
@@ -115,7 +117,9 @@ function CompanyForm() {
               setFormData({ ...formData, email: e.target.value })
             }
           />
-          {formErrors.email && <div>{formErrors.email}</div>}
+          {formErrors.email && (
+            <div className="error-message">{formErrors.email}</div>
+          )}
         </div>
         <div>
           <label>
@@ -132,6 +136,9 @@ function CompanyForm() {
               <option value="MNC">MNC</option>
             </select>
           </label>
+          {formErrors.companyType && (
+            <div className="error-message">{formErrors.companyType}</div>
+          )}
         </div>
         <div>
           <label htmlFor="phone" className="form-label">
@@ -146,7 +153,9 @@ function CompanyForm() {
               setFormData({ ...formData, description: e.target.value })
             }
           />
-          {formErrors.description && <div>{formErrors.description}</div>}
+          {formErrors.description && (
+            <div className="error-message">{formErrors.description}</div>
+          )}
         </div>
 
         <div>
@@ -162,7 +171,9 @@ function CompanyForm() {
               setFormData({ ...formData, address: e.target.value })
             }
           />
-          {formErrors.address && <div>{formErrors.address}</div>}
+          {formErrors.address && (
+            <div className="error-message">{formErrors.address}</div>
+          )}
         </div>
         <div className="btn-wrapper">
           <button type="submit">{btnText}</button>

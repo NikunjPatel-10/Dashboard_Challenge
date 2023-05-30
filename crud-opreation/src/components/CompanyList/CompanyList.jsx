@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./CompanyList.css";
 import { useContext } from "react";
 import Context from "../../contexts/Context";
-import DeleteOverlay from "../DeleteOverlay";
+import DeleteOverlay from "./../DeleteOverlay/DeleteOverlay";
 import { CSSTransition } from "react-transition-group";
 import SortData from "../SortData/SortData";
 
@@ -39,19 +39,22 @@ function CompanyList() {
     return setCompanydata(responseData);
   };
 
-  // sort companydata
-
+  /**
+   * sort companydata
+   */
   const [sortData, setSortData] = useState(companydata);
 
-  // useEffect(() => {
-  //   sortDataHandler();
-  // }, []);
-
-  const sortDataHandler = (data) => {
-    if (data === "All") {
+  /**
+   * get option value from child components
+   * @param {*} selectedOption
+   */
+  const sortDataHandler = (selectedOption) => {
+    if (selectedOption === "All") {
       setSortData(companydata);
     } else {
-      setSortData(companydata.filter((res) => res.companyType === data));
+      setSortData(
+        companydata.filter((res) => res.companyType === selectedOption)
+      );
     }
   };
 
@@ -64,7 +67,7 @@ function CompanyList() {
   /**
    * filter companydata according to the search
    */
-  const SearchData = sortData.filter((data) => {
+  const filteredData = sortData.filter((data) => {
     if (!data) {
       return null;
     } else if (!search) {
@@ -76,9 +79,9 @@ function CompanyList() {
 
   // for delete data
 
-  useEffect(() => {
-    handleConfirmDelete();
-  }, []);
+  // useEffect(() => {
+  //   handleConfirmDelete();
+  // }, []);
 
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
   const handleDelete = () => {
@@ -104,14 +107,11 @@ function CompanyList() {
   }
 
   return (
-    <div>
-      <div className="companyForm-btn-wrapper">
-        <div></div>
-        <div>
-          <Link to={"/company-form/add"}>
-            <button>AddCompany</button>
-          </Link>
-        </div>
+    <>
+      <div className="company-form-btn-wrapper">
+        <Link to={"/company-form/add"}>
+          <button>Add Company</button>
+        </Link>
       </div>
       <div className="companyList-wrapper">
         <SortData companydata={companydata} onSortData={sortDataHandler} />
@@ -124,8 +124,8 @@ function CompanyList() {
             <th>Actions</th>
           </thead>
           <tbody className="table-body">
-            {SearchData.length > 0 ? (
-              SearchData.map((item) => {
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => {
                 return (
                   <tr className="table-row">
                     <td>{item.name}</td>
@@ -157,7 +157,7 @@ function CompanyList() {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 

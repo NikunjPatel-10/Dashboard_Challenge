@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./SortData.css";
 
 const SortData = ({ onSortData }) => {
-  const [selectedOption, setselectedOption] = useState("All");
   const sortCompanyData = (e) => {
-    setselectedOption(e.target.value);
     onSortData(e.target.value);
   };
 
@@ -14,15 +12,15 @@ const SortData = ({ onSortData }) => {
     <div className="sortData-wrapper">
       <div>
         <label>
-          Sort By:
+          <span className="sort-text"> Filter By:</span>
           <select
             className="form-Control"
-            defaultValue={selectedOption}
+            defaultValue="All"
             onChange={sortCompanyData}
           >
             <option value="All">All</option>
             <option value="NC">NC</option>
-            <option value="MNC">MNC</option>
+            <option value="MNvvC">MNC</option>
           </select>
         </label>
       </div>

@@ -1,9 +1,9 @@
-.companyForm-btn-wrapper {
+.company-form-btn-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
 }
 
-.companyForm-btn-wrapper button {
+.company-form-btn-wrapper button {
     background-color: rgb(7, 146, 215);
     color: white;
     padding: 10px 15px;

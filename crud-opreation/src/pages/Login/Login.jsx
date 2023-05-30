@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
-import { getRegisterData, loggedInUser } from "../../services/apiService";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { getRegisterData } from "../../services/apiService";
+import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const initialValues = {
@@ -75,6 +76,14 @@ const Login = () => {
     //   console.log("error");
     // }
   };
+  const [showPassword, setShowPassword] = useState(false);
+
+  /**
+   * for show password of eye icon
+   */
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="background-wrapper">
@@ -97,6 +106,7 @@ const Login = () => {
                 className="form-Control"
                 placeholder="enter email here"
               />
+
               <ErrorMessage
                 name="email"
                 component="div"
@@ -105,13 +115,18 @@ const Login = () => {
             </div>
             <div className="">
               <label htmlFor="password">Password</label>
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                className="form-Control"
-                placeholder="enter password here"
-              />
+              <div className="password-wrapper">
+                <Field
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  className="form-Control"
+                  placeholder="enter password here"
+                />
+                <button type="button" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                </button>
+              </div>
               <ErrorMessage
                 name="password"
                 component="div"

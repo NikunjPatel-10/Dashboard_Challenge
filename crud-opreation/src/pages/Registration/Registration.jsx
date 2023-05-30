@@ -2,10 +2,7 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./registration.css";
-import {
-  postRegisterData,
-  signUpWithEmailPassword,
-} from "../../services/apiService";
+import { postRegisterData } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
