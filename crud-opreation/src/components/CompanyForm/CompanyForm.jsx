@@ -17,6 +17,7 @@ function CompanyForm() {
     address: "",
     companyType: "",
   });
+  const [formErrors, setFormErrors] = useState({});
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -55,7 +56,6 @@ function CompanyForm() {
 
   const { name, email, description, address, companyType } = formData;
 
-  const [formErrors, setFormErrors] = useState({});
   /**
    * post data to the database
    * @param {*} e
@@ -66,15 +66,7 @@ function CompanyForm() {
     console.log(formData);
     validationSchema
       .validate(formData, { abortEarly: false })
-      .then(() => {
-        if (id) {
-          updateCompanyList(formData, id);
-        } else {
-          postData(formData);
-        }
-        console.log(formData);
-        navigate("../home");
-      })
+
       .catch((validationErrors) => {
         const errors = {};
         validationErrors.inner.forEach((error) => {
@@ -82,6 +74,15 @@ function CompanyForm() {
         });
         setFormErrors(errors);
       });
+
+    if (id) {
+      updateCompanyList(formData, id);
+    } else {
+      postData(formData);
+    }
+    console.log(formData);
+    navigate("../home");
+
     setFormData(" ");
   };
 

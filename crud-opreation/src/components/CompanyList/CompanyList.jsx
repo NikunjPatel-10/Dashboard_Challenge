@@ -1,48 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { getData, deleteData } from "../../services/apiService";
+import { deleteData } from "../../services/apiService";
 import { Link, useLocation } from "react-router-dom";
 import "./CompanyList.css";
 import { useContext } from "react";
 import Context from "../../contexts/Context";
 import DeleteOverlay from "./../DeleteOverlay/DeleteOverlay";
-import { CSSTransition } from "react-transition-group";
 import SortData from "../SortData/SortData";
+import Search from "../Search.jsx/Search";
+import useGetData from "../../hooks/UseGetData";
 
 function CompanyList() {
-  const [companydata, setCompanydata] = useState([]);
-  useEffect(() => {
-    getListData();
-  }, []);
+  // const [companydata, setCompanydata] = useState([]);
+  // useEffect(() => {
+  //   getListData();
+  // }, []);
 
-  /**
-   * get data from the database
-   * @returns
-   */
-  const getListData = async () => {
-    const response = await getData();
-    // console.log(response.data);
-    const responseData = [];
-    for (const key in response.data) {
-      const id = key;
-      // console.log(key);
-      const shortData = response.data;
-      const responses = {
-        id: id,
-        name: shortData[id].name,
-        address: shortData[id].address,
-        description: shortData[id].description,
-        email: shortData[id].email,
-        companyType: shortData[id].companyType,
-      };
-      responseData.push(responses);
-    }
-    return setCompanydata(responseData);
-  };
+  // /**
+  //  * get data from the database
+  //  * @returns
+  //  */
+  // const getListData = async () => {
+  //   const response = await getData();
+  //   // console.log(response.data);
+  //   const responseData = [];
+  //   for (const key in response.data) {
+  //     const id = key;
+  //     // console.log(key);
+  //     const shortData = response.data;
+  //     const responses = {
+  //       id: id,
+  //       name: shortData[id].name,
+  //       address: shortData[id].address,
+  //       description: shortData[id].description,
+  //       email: shortData[id].email,
+  //       companyType: shortData[id].companyType,
+  //     };
+  //     responseData.push(responses);
+  //   }
+  //   return setCompanydata(responseData);
+  // };
 
   /**
    * sort companydata
    */
+
+  const companydata = useGetData();
   const [sortData, setSortData] = useState(companydata);
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
 
   /**
    * get option value from child components
@@ -83,7 +87,6 @@ function CompanyList() {
   //   handleConfirmDelete();
   // }, []);
 
-  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
   const handleDelete = () => {
     setShowDeleteOverlay(true);
   };
@@ -94,8 +97,8 @@ function CompanyList() {
    */
   async function handleConfirmDelete(id) {
     // delete data here
+    console.log(id);
     await deleteData(id);
-    getListData();
     setShowDeleteOverlay(false);
   }
 
@@ -114,7 +117,10 @@ function CompanyList() {
         </Link>
       </div>
       <div className="companyList-wrapper">
-        <SortData companydata={companydata} onSortData={sortDataHandler} />
+        <div className="filterlist-wrapper">
+          <Search />
+          <SortData companydata={companydata} onSortData={sortDataHandler} />
+        </div>
         <table className="table">
           <thead className="table-header">
             <th>Name</th>
@@ -125,7 +131,7 @@ function CompanyList() {
           </thead>
           <tbody className="table-body">
             {filteredData.length > 0 ? (
-              filteredData.map((item) => {
+              filteredData.map((item, index) => {
                 return (
                   <tr className="table-row">
                     <td>{item.name}</td>

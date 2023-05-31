@@ -23,19 +23,7 @@
     width: 100%;
 }
 
-.Searchbox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.Searchbox input {
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-}
 
 
 .navbar {

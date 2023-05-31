@@ -4,7 +4,7 @@ import CompanyList from "../../components/CompanyList/CompanyList";
 
 function Home() {
   return (
-    <div className="homePage-wrapper">
+    <div className="homepage-wrapper">
       <CompanyList />
     </div>
   );

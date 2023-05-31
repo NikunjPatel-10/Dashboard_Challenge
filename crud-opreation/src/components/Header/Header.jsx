@@ -6,14 +6,8 @@ import Context from "../../contexts/Context";
 
 function Header() {
   // const [searchItem, setSearchItem] = useState("");
-  const { setSearch } = useContext(Context);
-  const SearchHandler = (e) => {
-    setSearch(e.target.value);
-    // console.log(search);
-  };
 
   const navigate = useNavigate();
-  const path = useLocation();
 
   const handleLogout = () => {
     localStorage.clear();
@@ -27,16 +21,6 @@ function Header() {
           <img src={logo} />
         </figure>
       </div>
-      {path.pathname === "/home" && (
-        <div className="Searchbox">
-          <input
-            type="text"
-            placeholder="Search"
-            // value={search}
-            onChange={SearchHandler}
-          />
-        </div>
-      )}
 
       <nav className="navbar">
         <ul className="navbar-nav">

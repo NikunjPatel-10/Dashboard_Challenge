@@ -20,7 +20,7 @@ const SortData = ({ onSortData }) => {
           >
             <option value="All">All</option>
             <option value="NC">NC</option>
-            <option value="MNvvC">MNC</option>
+            <option value="MNC">MNC</option>
           </select>
         </label>
       </div>

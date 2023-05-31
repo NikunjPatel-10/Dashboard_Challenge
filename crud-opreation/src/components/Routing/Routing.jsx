@@ -41,24 +41,15 @@ const Routing = () => {
       </Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/registration" element={<Registration />}></Route>
-      <Route
-        path="/home"
-        element={<ProtectedRoutes Component={Home} />}
-      ></Route>
-      <Route
-        path="/about"
-        element={<ProtectedRoutes Component={About} />}
-      ></Route>
-      <Route
-        path="/contact"
-        element={<ProtectedRoutes Component={Contact} />}
-      ></Route>
-      <Route
-        path="/company-form"
-        element={<ProtectedRoutes Component={CompanyForm} />}
-      >
-        <Route path="add" element={<CompanyForm />}></Route>
-        <Route path="edit/:id" element={<CompanyForm />}></Route>
+
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/about" element={<About />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/company-form" element={<CompanyForm />}>
+          <Route path="add" element={<CompanyForm />}></Route>
+          <Route path="edit/:id" element={<CompanyForm />}></Route>
+        </Route>
       </Route>
     </Routes>
   );
