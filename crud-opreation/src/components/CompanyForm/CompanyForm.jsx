@@ -66,6 +66,7 @@ function CompanyForm() {
     console.log(formData);
     validationSchema
       .validate(formData, { abortEarly: false })
+      .then()
 
       .catch((validationErrors) => {
         const errors = {};
@@ -80,9 +81,9 @@ function CompanyForm() {
     } else {
       postData(formData);
     }
+
     console.log(formData);
     navigate("../home");
-
     setFormData(" ");
   };
 

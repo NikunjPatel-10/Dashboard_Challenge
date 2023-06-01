@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteData } from "../../services/apiService";
+import { deleteData, getData } from "../../services/apiService";
 import { Link, useLocation } from "react-router-dom";
 import "./CompanyList.css";
 import { useContext } from "react";
@@ -15,17 +15,11 @@ function CompanyList() {
   //   getListData();
   // }, []);
 
-  // /**
-  //  * get data from the database
-  //  * @returns
-  //  */
   // const getListData = async () => {
   //   const response = await getData();
-  //   // console.log(response.data);
   //   const responseData = [];
   //   for (const key in response.data) {
   //     const id = key;
-  //     // console.log(key);
   //     const shortData = response.data;
   //     const responses = {
   //       id: id,
@@ -37,77 +31,85 @@ function CompanyList() {
   //     };
   //     responseData.push(responses);
   //   }
-  //   return setCompanydata(responseData);
+  //   setCompanydata(responseData);
   // };
 
-  /**
-   * sort companydata
-   */
+  // const companydata = useGetData();
+  const [companydata, setCompanydata] = useState([]);
+  const [filterData, setFilterData] = useState(companydata);
 
-  const companydata = useGetData();
-  const [sortData, setSortData] = useState(companydata);
-  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+  const { search } = useContext(Context);
 
-  /**
-   * get option value from child components
-   * @param {*} selectedOption
-   */
-  const sortDataHandler = (selectedOption) => {
-    if (selectedOption === "All") {
-      setSortData(companydata);
+  useEffect(() => {
+    getData().then((response) => {
+      const responseData = [];
+      for (const key in response.data) {
+        const id = key;
+        const shortData = response.data;
+        const item = {
+          id: id,
+          name: shortData[id].name,
+          address: shortData[id].address,
+          description: shortData[id].description,
+          email: shortData[id].email,
+          companyType: shortData[id].companyType,
+        };
+        responseData.push(item);
+      }
+      setCompanydata(responseData);
+      setFilterData(responseData);
+    });
+  }, []);
+
+  useEffect(() => {
+    filterCompanyData();
+  }, []);
+
+  useEffect(() => {
+    filterCompanyData;
+  }, [companydata]);
+
+  const filterCompanyData = () => {
+    if (search === " ") {
+      setFilterData(companydata);
     } else {
-      setSortData(
-        companydata.filter((res) => res.companyType === selectedOption)
+      const filteredData = companydata.filter((item) =>
+        JSON.stringify(item).includes(search)
       );
+      setFilterData(filteredData);
     }
   };
 
-  /**
-   * get data from header using context
-   */
-  const { search } = useContext(Context);
-  console.log(search);
-
-  /**
-   * filter companydata according to the search
-   */
-  const filteredData = sortData.filter((data) => {
-    if (!data) {
-      return null;
-    } else if (!search) {
-      return data;
+  const sortDataHandler = (selectedOption) => {
+    if (selectedOption === "All") {
+      setFilterData(companydata);
     } else {
-      return JSON.stringify(data).includes(search);
+      const filteredData = companydata.filter(
+        (item) => item.companyType === selectedOption
+      );
+      setFilterData(filteredData);
     }
-  });
+  };
 
-  // for delete data
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null); // Store the ID of the item to be deleted
 
-  // useEffect(() => {
-  //   handleConfirmDelete();
-  // }, []);
-
-  const handleDelete = () => {
+  const handleDelete = (id) => {
+    setDeleteItemId(id);
     setShowDeleteOverlay(true);
   };
 
-  /**
-   * to delete data on confirm button
-   * @param {*} id
-   */
-  async function handleConfirmDelete(id) {
-    // delete data here
-    console.log(id);
-    await deleteData(id);
-    setShowDeleteOverlay(false);
-  }
+  const handleConfirmDelete = async () => {
+    if (deleteItemId) {
+      await deleteData(deleteItemId);
+      filterCompanyData();
+      setShowDeleteOverlay(false);
+    }
+  };
 
-  /**
-   *
-   */
-  function handleCancelDelete() {
+  const handleCancelDelete = () => {
     setShowDeleteOverlay(false);
-  }
+  };
 
   return (
     <>
@@ -123,45 +125,50 @@ function CompanyList() {
         </div>
         <table className="table">
           <thead className="table-header">
-            <th>Name</th>
-            <th>E-mail</th>
-            <th>Type</th>
-            <th>Address</th>
-            <th>Actions</th>
+            <tr>
+              <th>Name</th>
+              <th>E-mail</th>
+              <th>Type</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
           </thead>
           <tbody className="table-body">
-            {filteredData.length > 0 ? (
-              filteredData.map((item, index) => {
-                return (
-                  <tr className="table-row">
-                    <td>{item.name}</td>
-                    <td>{item.email}</td>
-                    <td>{item.companyType}</td>
-                    <td>{item.address}</td>
-                    <td>
-                      <div className="actions">
-                        <Link to={"/company-form/edit/" + item.id}>
-                          <button className="edit-btn">Edit</button>
-                        </Link>
-                        <button className="delete-btn" onClick={handleDelete}>
-                          Delete
-                        </button>
-                        {showDeleteOverlay && (
-                          <DeleteOverlay
-                            onConfirm={() => handleConfirmDelete(item.id)}
-                            onCancel={handleCancelDelete}
-                          />
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
+            {filterData.length > 0 ? (
+              filterData.map((item) => (
+                <tr key={item.id} className="table-row">
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.companyType}</td>
+                  <td>{item.address}</td>
+                  <td>
+                    <div className="actions">
+                      <Link to={"/company-form/edit/" + item.id}>
+                        <button className="edit-btn">Edit</button>
+                      </Link>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
             ) : (
-              <tr className="No-Data">No Records found</tr>
+              <tr className="No-Data">
+                <td colSpan="5">No Records found</td>
+              </tr>
             )}
           </tbody>
         </table>
+        {showDeleteOverlay && (
+          <DeleteOverlay
+            onConfirm={handleConfirmDelete}
+            onCancel={handleCancelDelete}
+          />
+        )}
       </div>
     </>
   );
