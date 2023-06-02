@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Search.css";
 import { useContext } from "react";
 import Context from "../../contexts/Context";
-
-const Search = () => {
-  const { setSearch } = useContext(Context);
+const Search = ({ onSearch }) => {
+  // const { setSearch } = useContext(Context);
   const SearchHandler = (e) => {
     // console.log(e.target.value);
-    const searchTerm = e.target.value;
-    setSearch(searchTerm);
-    console.log();
+    onSearch(e.target.value);
   };
   return (
     <div className="searchbox">

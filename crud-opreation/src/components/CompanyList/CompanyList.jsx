@@ -8,76 +8,22 @@ import DeleteOverlay from "./../DeleteOverlay/DeleteOverlay";
 import SortData from "../SortData/SortData";
 import Search from "../Search.jsx/Search";
 import useGetData from "../../hooks/UseGetData";
+import useFilter from "../../hooks/filterData";
+import Table from "../Table/Table";
 
 function CompanyList() {
-  // const [companydata, setCompanydata] = useState([]);
-  // useEffect(() => {
-  //   getListData();
-  // }, []);
-
-  // const getListData = async () => {
-  //   const response = await getData();
-  //   const responseData = [];
-  //   for (const key in response.data) {
-  //     const id = key;
-  //     const shortData = response.data;
-  //     const responses = {
-  //       id: id,
-  //       name: shortData[id].name,
-  //       address: shortData[id].address,
-  //       description: shortData[id].description,
-  //       email: shortData[id].email,
-  //       companyType: shortData[id].companyType,
-  //     };
-  //     responseData.push(responses);
-  //   }
-  //   setCompanydata(responseData);
-  // };
-
-  // const companydata = useGetData();
-  const [companydata, setCompanydata] = useState([]);
-  const [filterData, setFilterData] = useState(companydata);
-
-  const { search } = useContext(Context);
+  const companydata = useGetData();
+  const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
-    getData().then((response) => {
-      const responseData = [];
-      for (const key in response.data) {
-        const id = key;
-        const shortData = response.data;
-        const item = {
-          id: id,
-          name: shortData[id].name,
-          address: shortData[id].address,
-          description: shortData[id].description,
-          email: shortData[id].email,
-          companyType: shortData[id].companyType,
-        };
-        responseData.push(item);
-      }
-      setCompanydata(responseData);
-      setFilterData(responseData);
-    });
-  }, []);
-
-  useEffect(() => {
-    filterCompanyData();
-  }, []);
-
-  useEffect(() => {
-    filterCompanyData;
+    setFilterData(companydata);
   }, [companydata]);
 
-  const filterCompanyData = () => {
-    if (search === " ") {
-      setFilterData(companydata);
-    } else {
-      const filteredData = companydata.filter((item) =>
-        JSON.stringify(item).includes(search)
-      );
-      setFilterData(filteredData);
-    }
+  const handleSearch = (search) => {
+    const filterCompanyData = useFilter(companydata, search);
+    // console.log(filteredData);
+    // const filterCompanyData = filterData(companydata, search);
+    setFilterData(filterCompanyData);
   };
 
   const sortDataHandler = (selectedOption) => {
@@ -102,7 +48,9 @@ function CompanyList() {
   const handleConfirmDelete = async () => {
     if (deleteItemId) {
       await deleteData(deleteItemId);
-      filterCompanyData();
+      setFilterData((prevData) =>
+        prevData.filter((item) => item.id !== deleteItemId)
+      );
       setShowDeleteOverlay(false);
     }
   };
@@ -110,6 +58,26 @@ function CompanyList() {
   const handleCancelDelete = () => {
     setShowDeleteOverlay(false);
   };
+  // const tableColumns = [
+  //   { header: "Name", field: "name" },
+  //   { header: "E-mail", field: "email" },
+  //   { header: "Type", field: "companyType" },
+  //   { header: "Address", field: "address" },
+  //   {
+  //     header: "Actions",
+  //     field: "actions",
+  //     render: (item) => (
+  //       <div className="actions">
+  //         <button className="edit-btn" onClick={() => handleEdit(item.id)}>
+  //           Edit
+  //         </button>
+  //         <button className="delete-btn" onClick={() => handleDelete(item.id)}>
+  //           Delete
+  //         </button>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
   return (
     <>
@@ -120,7 +88,7 @@ function CompanyList() {
       </div>
       <div className="companyList-wrapper">
         <div className="filterlist-wrapper">
-          <Search />
+          <Search onSearch={handleSearch} />
           <SortData companydata={companydata} onSortData={sortDataHandler} />
         </div>
         <table className="table">
@@ -163,6 +131,11 @@ function CompanyList() {
             )}
           </tbody>
         </table>
+        {/* <Table columns={tableColumns} data={filterData} />
+        {filterData.length === 0 && (
+          <div className="No-Data">No Records found</div>
+        )} */}
+        {/* <Table columns={columns} data={filterData} /> */}
         {showDeleteOverlay && (
           <DeleteOverlay
             onConfirm={handleConfirmDelete}

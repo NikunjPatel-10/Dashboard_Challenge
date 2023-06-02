@@ -66,3 +66,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.border {
+    border: 2px solid blue;
+}

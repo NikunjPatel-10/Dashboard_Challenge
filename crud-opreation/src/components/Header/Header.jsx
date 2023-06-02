@@ -42,8 +42,7 @@ function Header() {
               <span className="nav-link">Contact-us</span>
             </li>
           </Link>
-          <li className="nav-item">
-            {/* <Home size={22} /> */}
+          <li className="nav-item ">
             <button className="logout-btn-wrapper" onClick={handleLogout}>
               Logout
             </button>
