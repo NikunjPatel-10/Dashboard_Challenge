@@ -6,7 +6,6 @@ function DeleteOverlay(props) {
     props.onConfirm();
   }
 
-  //   const [className, setClassName] = useState();
   function handleCancel() {
     props.onCancel();
   }

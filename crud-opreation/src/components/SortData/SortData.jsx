@@ -6,15 +6,13 @@ const SortData = ({ onSortData }) => {
     onSortData(e.target.value);
   };
 
-  //   console.log(selectedOption);
-
   return (
-    <div className="sortData-wrapper">
+    <div className="sortdata-wrapper">
       <div>
         <label>
           <span className="sort-text"> Filter By:</span>
           <select
-            className="form-Control"
+            className="form-control"
             defaultValue="All"
             onChange={sortCompanyData}
           >

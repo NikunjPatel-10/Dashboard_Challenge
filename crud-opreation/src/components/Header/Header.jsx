@@ -6,7 +6,6 @@ import Context from "../../contexts/Context";
 
 function Header() {
   // const [searchItem, setSearchItem] = useState("");
-
   const navigate = useNavigate();
 
   const handleLogout = () => {

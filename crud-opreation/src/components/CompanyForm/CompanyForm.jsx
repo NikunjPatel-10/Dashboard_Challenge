@@ -34,8 +34,10 @@ function CompanyForm() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
 
   /**
    * fetch data from database
@@ -60,31 +62,33 @@ function CompanyForm() {
    * post data to the database
    * @param {*} e
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
-    validationSchema
-      .validate(formData, { abortEarly: false })
-      .then()
-
-      .catch((validationErrors) => {
-        const errors = {};
-        validationErrors.inner.forEach((error) => {
-          errors[error.path] = error.message;
-        });
-        setFormErrors(errors);
+    try {
+      await validationSchema.validate(formData, { abortEarly: false });
+      if (id) {
+        await updateCompanyList(formData, id);
+      } else {
+        await postData(formData);
+      }
+      navigate("../home");
+      setFormData({
+        name: "",
+        email: "",
+        description: "",
+        address: "",
+        companyType: "",
       });
-
-    if (id) {
-      updateCompanyList(formData, id);
-    } else {
-      postData(formData);
+    } catch (validationErrors) {
+      const errors = {};
+      validationErrors.inner.forEach((error) => {
+        errors[error.path] = error.message;
+      });
+      setFormErrors(errors);
     }
 
     console.log(formData);
-    navigate("../home");
-    setFormData(" ");
   };
 
   const btnText = id ? "Update" : "Submit";
@@ -98,7 +102,7 @@ function CompanyForm() {
           <input
             type="text"
             name="name"
-            className="form-Control"
+            className="form-control"
             value={name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
@@ -113,7 +117,7 @@ function CompanyForm() {
           <input
             type="text"
             name="email"
-            className="form-Control"
+            className="form-control"
             value={email}
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
@@ -128,7 +132,7 @@ function CompanyForm() {
             Company Type:
             <select
               value={companyType}
-              className="form-Control"
+              className="form-control"
               onChange={(e) =>
                 setFormData({ ...formData, companyType: e.target.value })
               }
@@ -149,7 +153,7 @@ function CompanyForm() {
           <input
             type="text"
             name="phone"
-            className="form-Control"
+            className="form-control"
             value={description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -167,7 +171,7 @@ function CompanyForm() {
           <textarea
             type="text"
             name="address"
-            className="form-Control"
+            className="form-control"
             value={address}
             onChange={(e) =>
               setFormData({ ...formData, address: e.target.value })

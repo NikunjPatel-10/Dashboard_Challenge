@@ -9,11 +9,12 @@ import SortData from "../SortData/SortData";
 import Search from "../Search.jsx/Search";
 import useGetData from "../../hooks/UseGetData";
 import useFilter from "../../hooks/filterData";
-import Table from "../Table/Table";
 
 function CompanyList() {
   const companydata = useGetData();
   const [filterData, setFilterData] = useState([]);
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null); // Store the ID of the item to be deleted
 
   useEffect(() => {
     setFilterData(companydata);
@@ -37,9 +38,6 @@ function CompanyList() {
     }
   };
 
-  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
-  const [deleteItemId, setDeleteItemId] = useState(null); // Store the ID of the item to be deleted
-
   const handleDelete = (id) => {
     setDeleteItemId(id);
     setShowDeleteOverlay(true);
@@ -58,26 +56,6 @@ function CompanyList() {
   const handleCancelDelete = () => {
     setShowDeleteOverlay(false);
   };
-  // const tableColumns = [
-  //   { header: "Name", field: "name" },
-  //   { header: "E-mail", field: "email" },
-  //   { header: "Type", field: "companyType" },
-  //   { header: "Address", field: "address" },
-  //   {
-  //     header: "Actions",
-  //     field: "actions",
-  //     render: (item) => (
-  //       <div className="actions">
-  //         <button className="edit-btn" onClick={() => handleEdit(item.id)}>
-  //           Edit
-  //         </button>
-  //         <button className="delete-btn" onClick={() => handleDelete(item.id)}>
-  //           Delete
-  //         </button>
-  //       </div>
-  //     ),
-  //   },
-  // ];
 
   return (
     <>
@@ -131,11 +109,7 @@ function CompanyList() {
             )}
           </tbody>
         </table>
-        {/* <Table columns={tableColumns} data={filterData} />
-        {filterData.length === 0 && (
-          <div className="No-Data">No Records found</div>
-        )} */}
-        {/* <Table columns={columns} data={filterData} /> */}
+
         {showDeleteOverlay && (
           <DeleteOverlay
             onConfirm={handleConfirmDelete}
