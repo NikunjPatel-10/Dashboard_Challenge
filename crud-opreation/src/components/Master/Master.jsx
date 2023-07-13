@@ -2,6 +2,7 @@ import React from "react";
 import ProtectedRoutes from "../ProtectedRoutes/ProtectedRoutes";
 import Header from "../Header/Header";
 import "./Master.css";
+import { Outlet } from "react-router-dom";
 
 const Master = () => {
   return (

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BaseUrl } from "./../../environment";
 
-let userId = null;
+
 export const postData = async (data) => {
   await axios.post(BaseUrl + "company.json", { ...data }).then((res) => {
     // console.log(res);
@@ -26,8 +26,8 @@ export const updateCompanyList = async (data, id) => {
 
 // for registration
 
-export const postRegisterData = async () => {
-  return await axios.post(BaseUrl + "RegisterData.json");
+export const postRegisterData = async (data) => {
+  return await axios.post(BaseUrl + "RegisterData.json", { ...data })
 };
 
 export const getRegisterData = async () => {

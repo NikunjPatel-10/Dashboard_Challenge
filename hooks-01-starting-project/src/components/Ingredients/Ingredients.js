@@ -41,8 +41,18 @@ function Ingredients() {
         ...prevIngredients, { id: responseData.name, ...ingredient }
       ])
     })
+  }
 
+  const removeIngredientHandler = (IngredientId) => {
 
+    fetch(`https://hooks-projects-default-rtdb.firebaseio.com/ingredients/${IngredientId}.json`,
+      {
+        method: 'DELETE'
+      }
+    ).then(response => {
+      setUserIngredient(prevIngredients =>
+        prevIngredients.filter(Ingredient => Ingredient.id !== IngredientId))
+    })
   }
 
 
@@ -53,7 +63,7 @@ function Ingredients() {
       <section>
         <Search />
         {/* Need to add list here! */}
-        <IngredientList ingredients={userIngredient} onRemoveItem={() => { }} />
+        <IngredientList ingredients={userIngredient} onRemoveItem={removeIngredientHandler} />
       </section>
     </div>
   );
